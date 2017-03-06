@@ -17,63 +17,61 @@ var gulp 		= require('gulp'),
 
 // =============================================================================== PROJECT STRUCTURE
 
-var proj = {
-		root			: "..",
+var root = "..",
+	production_build 	= false,
+	proj = {
+		app_in			: root + "/src/app",
+		app_out			: root + "/www/js",
+		temp_in			: root + "/src/app/templates",
+		temp_out		: root + "/www/templates",
 
-		app_in			: "../src/app",
-		app_out			: "../www/js",
+		sass_in			: root + "/src/scss",
+		sass_out		: root + "/www/css",
 
-		sass_in			: "../src/scss",
-		sass_out		: "../www/css",
+		fonts_in		: root + "/src/scss/fonts",
+		fonts_out		: root + "/www/fonts",
 
-		angular_in		: "../src/vendor/angular",
-		angular_out		: "../www/js",
+		angular_in		: root + "/src/vendor/angular",
+		angular_out		: root + "/www/js",
 
-		ionic_in		: "../scr/vendor/ionic",
-		ionic_out		: "../js"
-
-	},
-	production_build 	= false;
-
-// angular
-proj.angular			= proj.vendor + "/angular";
-proj.angular_ui			= proj.vendor + "/angular-ui";
-proj.angular_output 	= proj.output + "/js";
+		ionic_in		: root + "/scr/vendor/ionic",
+		ionic_out		: root + "/js"
+	};
 
 //ionic framework
-proj.ionic_sass			= proj.sass 	+ "/ionic-framework/scss";
-proj.ionic_sass_output	= proj.output 	+ "/css";
-proj.ionic_fonts		= proj.sass 	+ "/ionic-framework/fonts";
-proj.ionic_js			= proj.vendor 	+ "/ionic";
-proj.ionic_js_output	= proj.output 	+ "/js";
+proj.ionic_sass				= proj.sass 	+ "/ionic-framework/scss";
+proj.ionic_sass_output		= proj.output 	+ "/css";
+proj.ionic_fonts			= proj.sass 	+ "/ionic-framework/fonts";
+proj.ionic_js				= proj.vendor 	+ "/ionic";
+proj.ionic_js_output		= proj.output 	+ "/js";
 
 //priscilla framework
-proj.priscilla_fonts	= proj.sass 	+ "/priscilla-framework/fonts";
+proj.priscilla_fonts		= proj.sass 	+ "/priscilla-framework/fonts";
 
 //priscilla app
 proj.priscilla_sass			= proj.sass 	+ "/priscilla-framework/";
 proj.priscilla_sass_output	= proj.output 	+ "/css";
 
 // project output
-proj.fonts_output		= proj.output 	+ "/fonts";
-proj.app_output			= proj.output 	+ "/js";
-proj.app_temp_output	= proj.output 	+ "/templates";
+proj.fonts_output			= proj.output 	+ "/fonts";
+proj.app_output				= proj.output 	+ "/js";
+proj.app_temp_output		= proj.output 	+ "/templates";
 
 // =============================================================================== TASKS
 
 gulp.task("clear_fonts", [], function() {
 	return del([
-					proj.fonts_output + "/**",
-					"!" + proj.fonts_output + "/fonts/"
-				], { force: true } );
+		proj.fonts_out + "/**",
+		"!" + proj.fonts_out + "/fonts/"
+	], { force: true } );
 });
 
-gulp.task("copy_priscilla_templates", [], function() {
-	gulp.src( proj.app + "/templates/**/*" )
-		.pipe( gulp.dest( proj.app_temp_output ) );
+gulp.task("copy_app_templates", [], function() {
+	gulp.src( proj.temp_in + "/**/*" )
+		.pipe( gulp.dest( proj.temp_out ) );
 
-	gulp.src( proj.app + "/templates/**/*.htm" )
-		.pipe( gulp.dest( proj.app_temp_output ) )
+	gulp.src( proj.temp_in + "/**/*.htm" )
+		.pipe( gulp.dest( proj.temp_out ) )
 		.pipe( debug() );
 });
 
