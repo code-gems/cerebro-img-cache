@@ -39,7 +39,7 @@ cerebro
 	$scope.appScope.onAppResume = function() { $rootScope.$broadcast("app-resume") };
 
 	$scope.initApp = function() {
-		console.log("initApp")
+		console.log("storeInit")
 		$scope.bindDeviceEvents();
 
 		$scope.appScope.reloading 	= false;
